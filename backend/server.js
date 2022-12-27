@@ -10,7 +10,7 @@ const typeDefs = gql`
   type Query {
     popularMovies: [Movie!]
     topRatedMovies: [Movie!]
-    upcommingMovies: [Movie!]
+    upcomingMovies: [Movie!]
     movie(id: Int!): Movie
   }
   type Movie {
@@ -48,7 +48,7 @@ const resolvers = {
       );
       return results;
     },
-    async upcommingMovies() {
+    async upcomingMovies() {
       const {
         data: { results },
       } = await axios.get(
