@@ -1,6 +1,6 @@
 import { gql, useApolloClient } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { Movie } from "../store/type/interface";
+import { Movie } from "../store/types/interface";
 
 export default function Movies() {
   const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
