@@ -14,7 +14,6 @@ const GET_MOVIE = gql`
   }
 `;
 
-
 const Container = styled.div`
   height: 100vh;
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
@@ -44,7 +43,7 @@ const Description = styled.p`
   font-size: 28px;
 `;
 
-const Image = styled.div<{bg: string}>`
+const Image = styled.div<{ bg: string }>`
   width: 25%;
   height: 60%;
   background-color: transparent;
@@ -61,13 +60,13 @@ export default function Movie() {
       movieId: parseInt(id || ""),
     },
   });
-  return <Container>
-    <Column>
-    <Title>
-      {loading ? "Loading..." : `${data?.movie?.title}`}
-    </Title>
-    <Subtitle>⭐️ {data?.movie?.vote_average}</Subtitle>
-    </Column>
-    <Image bg={data?.movie?.poster_path} />
-    </Container>;
+  return (
+    <Container>
+      <Column>
+        <Title>{loading ? "Loading..." : `${data?.movie?.title}`}</Title>
+        <Subtitle>⭐️ {data?.movie?.vote_average}</Subtitle>
+      </Column>
+      <Image bg={data?.movie?.poster_path} />
+    </Container>
+  );
 }
