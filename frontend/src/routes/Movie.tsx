@@ -10,6 +10,7 @@ const GET_MOVIE = gql`
       title
       poster_path
       vote_average
+      isLiked @client
     }
   }
 `;
@@ -65,6 +66,7 @@ export default function Movie() {
       <Column>
         <Title>{loading ? "Loading..." : `${data?.movie?.title}`}</Title>
         <Subtitle>⭐️ {data?.movie?.vote_average}</Subtitle>
+        <button>{data?.movie?.isLiked ? "Unlike" : "Like"}</button>
       </Column>
       <Image bg={data?.movie?.poster_path} />
     </Container>
