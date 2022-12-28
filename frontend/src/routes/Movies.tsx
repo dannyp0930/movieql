@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { gql, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { Movie } from "../store/types/interface";
-
-const IMG_URL = "https://image.tmdb.org/t/p/original";
+import { IMG_URL } from "../util/API";
 
 const ALl_MOVIES = gql`
   {
@@ -78,7 +77,7 @@ const PosterContainer = styled.div`
 `;
 
 const PosterBg = styled.div<{ background: string }>`
-  background-image: url(${(props) => props.background});
+  background-image: url(${(props) => IMG_URL + props.background});
   height: 100%;
   width: 100%;
   background-size: cover;
@@ -99,7 +98,7 @@ export default function Movies() {
         {data?.popularMovies?.map((movie: Movie) => (
           <PosterContainer key={movie.id}>
             <Link to={`movie/${movie.id}`}>
-              <PosterBg background={IMG_URL + movie.poster_path} />
+              <PosterBg background={movie.poster_path} />
             </Link>
           </PosterContainer>
         ))}
@@ -109,7 +108,7 @@ export default function Movies() {
         {data?.topRatedMovies?.map((movie: Movie) => (
           <PosterContainer key={movie.id}>
             <Link to={`movie/${movie.id}`}>
-              <PosterBg background={IMG_URL + movie.poster_path} />
+              <PosterBg background={movie.poster_path} />
             </Link>
           </PosterContainer>
         ))}
@@ -119,7 +118,7 @@ export default function Movies() {
         {data?.upcomingMovies?.map((movie: Movie) => (
           <PosterContainer key={movie.id}>
             <Link to={`movie/${movie.id}`}>
-              <PosterBg background={IMG_URL + movie.poster_path} />
+              <PosterBg background={movie.poster_path} />
             </Link>
           </PosterContainer>
         ))}
