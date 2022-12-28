@@ -3,6 +3,8 @@ import { gql, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { Movie } from "../store/types/interface";
 
+const IMG_URL = "https://image.tmdb.org/t/p/original";
+
 const ALl_MOVIES = gql`
   {
     popularMovies {
@@ -54,13 +56,17 @@ const Loading = styled.div`
   margin-top: 10px;
 `;
 
+const GridTitle = styled.h2`
+  font-size: 30px;
+  font-weight: 300;
+  margin: 30px;
+`
+
 const MoviesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 25px;
   width: 60%;
-  position: relative;
-  top: -50px;
 `;
 
 const PosterContainer = styled.div`
@@ -71,32 +77,49 @@ const PosterContainer = styled.div`
   background-color: transparent;
 `;
 
-// const PosterBg = styled.div`
-//   background-image: url(${(props) => props.background});
-//   height: 100%;
-//   width: 100%;
-//   background-size: cover;
-//   background-position: center center;
-//   border-radius: 7px;
-// `;
+const PosterBg = styled.div<{ background: string }>`
+  background-image: url(${(props) => props.background});
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 7px;
+`;
 
 export default function Movies() {
-  const {
-    data: { popularMovies, topRatedMovies, upcomingMovies },
-    loading,
-  } = useQuery(ALl_MOVIES);
+  const { data, loading } = useQuery(ALl_MOVIES);
   return (
     <Container>
       <Header>
         <Title>Apollo Movies</Title>
       </Header>
       {loading && <Loading>Loading...</Loading>}
+      <GridTitle>Popular Movies</GridTitle>
       <MoviesGrid>
-        {popularMovies?.map((movie: Movie) => (
+        {data?.popularMovies?.map((movie: Movie) => (
           <PosterContainer key={movie.id}>
             <Link to={`movie/${movie.id}`}>
-              {movie.title}
-              {/* <PosterBg background={movie.poster_path} /> */}
+              <PosterBg background={IMG_URL + movie.poster_path} />
+            </Link>
+          </PosterContainer>
+        ))}
+      </MoviesGrid>
+      <GridTitle>Top Rated Movies</GridTitle>
+      <MoviesGrid>
+        {data?.topRatedMovies?.map((movie: Movie) => (
+          <PosterContainer key={movie.id}>
+            <Link to={`movie/${movie.id}`}>
+              <PosterBg background={IMG_URL + movie.poster_path} />
+            </Link>
+          </PosterContainer>
+        ))}
+      </MoviesGrid>
+      <GridTitle>Upcoming Movies</GridTitle>
+      <MoviesGrid>
+        {data?.upcomingMovies?.map((movie: Movie) => (
+          <PosterContainer key={movie.id}>
+            <Link to={`movie/${movie.id}`}>
+              <PosterBg background={IMG_URL + movie.poster_path} />
             </Link>
           </PosterContainer>
         ))}
